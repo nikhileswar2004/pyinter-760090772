@@ -1,0 +1,57 @@
+# Python bytecode
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+
+# Tests, coverage, and tool caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local secrets and configuration
+.env
+.envrc
+.pypirc
+
+# Emacs temporary and backup files
+*~
+\#*\#
+.\#*
+*.elc
+auto-save-list/
+tramp
+/.emacs.desktop
+/.emacs.desktop.lock
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# Local repo hygiene
+artefacts/*
+!artefacts/ARTEFACTS_README.md
+/reports/*
+!/reports/REPORTS_README.md
+!/reports/templates/

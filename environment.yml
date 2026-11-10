@@ -1,0 +1,16 @@
+name: pyinter
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - flake8
+  - python=3.12
+  - pytest
+  - pandas
+  - duckdb
+  - pyarrow
+  - matplotlib
+  - click
+  - dvc
+  - jupyter
+  - ipykernel

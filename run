@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+
+set -e
+
+run_week() {
+  test_file=$1
+
+  if [ "$2" = "verbose" ]; then
+    pytest -v "$test_file"
+  else
+    pytest -v --tb=no "$test_file"
+  fi
+}
+
+case "$1" in
+
+  check)
+    python verify.py
+    ;;
+
+  week4)
+
+    ./run check
+
+    echo
+    echo "Running Week 4 unit tests..."
+    echo
+
+    run_week unit_tests/test_penguin_summaries.py "$2"
+    ;;
+
+  script4)
+
+    ./run check
+
+    echo
+    echo "Running Week 4 analysis script..."
+    echo
+
+    python scripts/week4.py
+    ;;
+
+  week5)
+
+    ./run check
+
+    quarto render reports/templates/olive_oil.qmd --output-dir ../
+
+    echo
+    echo "Rendering week 5 report"
+    echo
+    ;;
+
+  script5)
+
+    ./run check
+
+    shift
+
+    python scripts/week5.py "$@"
+    ;;
+
+  week6)
+
+    ./run check
+
+    pytest integration_tests/test_week6.py
+
+    echo
+    echo "Week 6 integration tests"
+    echo
+    ;;
+
+  script6)
+
+    ./run check
+
+    python scripts/week6.py \
+      --database data/inter.duckdb \
+      --query-file sql/penguin_body_mass.sql \
+      --snapshot-file artefacts/penguins.csv \
+      --boxplot-file artefacts/penguins_box.png
+    ;;
+
+  penguins)
+
+    ./run check
+
+    shift
+
+    dvc repro penguins
+    ;;
+
+  olives)
+
+    ./run check
+
+    shift
+
+    dvc repro report_olive_oil
+    ;;
+
+  help)
+
+    echo
+    echo "Available commands:"
+    echo
+    echo "  ./run check"
+    echo "      Verify environment"
+    echo
+    echo "  ./run week4"
+    echo "      Run Week 4 unit tests"
+    echo
+    echo "  ./run script4"
+    echo "      Run Week 4 analysis script"
+    echo
+    echo "  ./run week5"
+    echo "      Run Week 5 tests"
+    echo
+    echo "  ./run script5 [options]"
+    echo "      Run Week 5 Click script"
+    echo
+    echo "  ./run week6"
+    echo "      Run Week 6 integration tests"
+    echo
+    echo "  ./run script6"
+    echo "      Run week 6 script"
+    echo
+    echo
+    echo "  ./run penguins"
+    echo "      Run the penguin DVC pipeline"
+    echo
+    echo "  ./run olives"
+    echo "      Run the olive oil DVC pipeline"
+    echo
+    ;;
+
+  *)
+
+    echo
+    echo "Unknown command"
+    echo "Try: ./run help"
+    echo
+    exit 1
+    ;;
+esac
+

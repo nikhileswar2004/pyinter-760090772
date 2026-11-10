@@ -1,0 +1,54 @@
+stages:
+  penguins:
+    cmd: >
+      python scripts/week6.py
+      --database data/inter.duckdb
+      --query-file sql/penguin_body_mass.sql
+      --snapshot-file artefacts/penguins.csv
+      --boxplot-file artefacts/penguins_box.png
+    deps:
+      - scripts/week6.py
+      - src/database.py
+      - src/penguin_plotting.py
+      - data/inter.duckdb
+      - sql/penguin_body_mass.sql
+    outs:
+      - artefacts/penguins.csv
+      - artefacts/penguins_box.png
+  extract_olive_oil:
+    cmd: >
+      python scripts/week6_extract_olive_oil.py
+      --database data/inter.duckdb
+      --query-file sql/olive_oil.sql
+      --snapshot-file artefacts/olive_oil.csv
+    deps:
+      - scripts/week6_extract_olive_oil.py
+      - src/database.py
+      - data/inter.duckdb
+      - sql/olive_oil.sql
+    outs:
+      - artefacts/olive_oil.csv
+  analyse_olive_oil:
+    cmd: >
+      python scripts/week6_analyse_olive_oil.py
+      --snapshot-file artefacts/olive_oil.csv
+      --scatter-file artefacts/olive_oil_pairwise_scatter.png
+      --summary-file artefacts/olive_oil_summary.html
+    deps:
+      - scripts/week6_analyse_olive_oil.py
+      - src/olive_oil_plotting.py
+      - src/olive_oil_summaries.py
+      - artefacts/olive_oil.csv
+    outs:
+      - artefacts/olive_oil_pairwise_scatter.png
+      - artefacts/olive_oil_summary.html
+  report_olive_oil:
+    cmd: >
+      quarto render reports/templates/olive_oil.qmd
+      --output-dir ..
+    deps:
+      - reports/templates/olive_oil.qmd
+      - artefacts/olive_oil_pairwise_scatter.png
+      - artefacts/olive_oil_summary.html
+    outs:
+      - reports/olive_oil.html
