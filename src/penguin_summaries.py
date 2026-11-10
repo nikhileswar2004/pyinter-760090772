@@ -1,3 +1,4 @@
+
 def summarise_body_mass(df):
     """
     Calculate summary statistics for penguin body mass grouped by sex.
@@ -25,4 +26,12 @@ def summarise_body_mass(df):
     >>> summary = summarise_body_mass(df)
     >>> print(summary.loc["male", "mean"])
     """
-    pass
+    summary = df.groupby("sex")["body_mass_g"].agg(
+        count="count",
+        mean="mean",
+        std="std",
+        minimum="min",
+        maximum="max"
+    )
+
+    return summary
