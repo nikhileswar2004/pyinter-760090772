@@ -21,6 +21,9 @@ def main(database, query_file, snapshot_file, boxplot_file):
     query_file = Path(query_file)
     snapshot_file = Path(snapshot_file)
     boxplot_file = Path(boxplot_file)
+    print("HELLO WORLD")
+    query = query_file.read_text()
+
     query = query_file.read_text()
     df = run_query(database, query)
     print(df.head())

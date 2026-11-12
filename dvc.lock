@@ -1,0 +1,35 @@
+schema: '2.0'
+stages:
+  penguins:
+    cmd: "python scripts/week6.py --database data/inter.duckdb --query-file sql/penguin_body_mass.sql
+      --snapshot-file artefacts/penguins.csv --boxplot-file artefacts/penguins_box.png\n"
+    deps:
+    - path: data/inter.duckdb
+      hash: md5
+      md5: d29c1f6b4b78b0b62e71413ddc5a873b
+      size: 1060864
+    - path: scripts/week6.py
+      hash: md5
+      md5: 6fdf398d9ef0ced0150411706926c5cc
+      size: 1003
+    - path: sql/penguin_body_mass.sql
+      hash: md5
+      md5: ed6846c39fa573353a43a8d4abccf65f
+      size: 90
+    - path: src/database.py
+      hash: md5
+      md5: 5620190502dbc4e3456cdddd85920f4e
+      size: 237
+    - path: src/penguin_plotting.py
+      hash: md5
+      md5: 8fa584738c706cc519abd2040669b2d9
+      size: 595
+    outs:
+    - path: artefacts/penguins.csv
+      hash: md5
+      md5: d96d99b5d861d548685d66f64ef35835
+      size: 2568
+    - path: artefacts/penguins_box.png
+      hash: md5
+      md5: a2e9a091526402984ea0dcb95e08c98e
+      size: 16487
